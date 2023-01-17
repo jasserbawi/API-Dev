@@ -76,10 +76,11 @@ public class Program
 public class Person
 {
     public string Name { get; set; }
-    public int Age { get; set; }
-    public string City { get; set; }
-    public override string ToString()
-    {
-        return $"{Name} - {City} - {Age}";
+    private int _age;
+    public int Age {
+        get => _age;
+        set => _age = value < 0 ? throw new ArgumentException() : value;
     }
+    public string City { get; set; }
+    public override string ToString() => $"{Name} - {City} - {Age}"; //ToString() returns the string
 }
