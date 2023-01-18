@@ -67,6 +67,6 @@ public class Program
         var singlePostCodeResponseModelObject = JsonConvert.DeserializeObject<SinglePostcodeResponse>(singlePostCodeResponse.Content);
         var bulkPostCodeResponseModelObject = JsonConvert.DeserializeObject<BulkPostcodeResponse>(bulkPostCodeResponse.Content);
 
-        Console.WriteLine(singlePostCodeResponseModelObject.result.codes.parish);
+        //Console.WriteLine(singlePostCodeResponseModelObject.result.codes.parish);
     }
 }
