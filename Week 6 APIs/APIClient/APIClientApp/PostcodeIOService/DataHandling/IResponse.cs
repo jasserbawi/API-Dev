@@ -1,5 +1,3 @@
 ﻿namespace APIClientApp.PostcodeIOService;
 
-public interface IResponse
-{
-}
+public interface IResponse {}

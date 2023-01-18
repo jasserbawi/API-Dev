@@ -1,42 +1,62 @@
-﻿namespace APIClientApp.PostcodeService;
+﻿using APIClientApp.PostcodeIOService;
+
+namespace APIClientApp.PostcodeService;
 
 public class SinglePostcodeService
 {
     #region Properties
-    //Restsharp object which handles communication with the Postcodes.io API
-    public RestClient Client { get; set; }
+    public CallManager CallManager { get; set; }
 
     //Capture the response
     public RestResponse Response { get; set; }
 
-    //a Newtonsoft JObject to represent the json response
+    //A Newtonsoft JObject to represent the json response
     public JObject ResponseContent { get; set; }
 
-    public SinglePostcodeResponse ResponseObject { get; set;}
+   
+
+    //C# Object of the JSON response
+    public DTO<SinglePostcodeResponse> ResponseObject { get; set; }
+
+    //Raw string of the JSON response
+    public string ResponseString { get; set; }
+
+    public string PostcodeSelected { get; set; }
 
     #endregion
 
     public SinglePostcodeService()
     {
-        Client = new RestClient(AppConfigReader.BaseUrl);
+        CallManager = new CallManager();
+        ResponseObject = new DTO<SinglePostcodeResponse>();
     }
 
+    /// <summary>
+    /// defines and makes the API request, and stores the response.
+    /// </summary>
+    /// <param name="postcode"></param>
+    /// <returns></returns>
     public async Task MakeRequestAsync(string postcode)
     {
-        var restRequest = new RestRequest(); //Makes the HTTP Request
+        //Registering the postcode used
+        PostcodeSelected = postcode;
 
-        //Building the request
-        restRequest.Method = Method.Get; 
-        restRequest.AddHeader("Content-Type", "application/json");
-        restRequest.Timeout = -1;
+        //Make the request
+        ResponseString = await CallManager.MakePostcodeRequestAsync(postcode);
 
-        restRequest.Resource = $"postcodes/{postcode}";
+        ResponseContent = JObject.Parse(ResponseString);
 
-        Response = await Client.ExecuteAsync(restRequest);
-
-        ResponseContent = JObject.Parse(Response.Content);
-
-        ResponseObject = JsonConvert.DeserializeObject<SinglePostcodeResponse>(Response.Content);
-
+        ResponseObject.DeserializeResponse(ResponseString);
     }
+
+    //Helper functions that enable ease of access to certain bits of data
+    public string GetHeaderValue(string headerName)
+    {
+        return CallManager.RestResponse.Headers
+            .Where(h => h.Name == headerName)
+            .Select(h => h.Value.ToString())
+            .FirstOrDefault();
+    }
+
+    public string GetResponseContentType() => CallManager.RestResponse.ContentType;
 }

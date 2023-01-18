@@ -19,13 +19,14 @@ public class CallManager
     {
         //Building the request
         var request = new RestRequest(); //Makes the HTTP Request
-
         request.Method = Method.Get;
         request.AddHeader("Content-Type", "application/json");
         request.Timeout = -1;
 
-        request.Resource = $"postcodes/{postcode}";
+        request.Resource = $"postcodes/{postcode.Replace(" ", "")}";
 
-        Response = await Client.ExecuteAsync(request);
+        RestResponse = await _client.ExecuteAsync(request);
+
+        return RestResponse.Content;
     }
 }
