@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace APIClientApp.PostcodeService;
+﻿namespace APIClientApp.PostcodeService;
 
 public class SinglePostcodeService
 {
