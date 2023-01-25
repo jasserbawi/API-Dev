@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Demo</title>
+    <script defer>
+        //Variables
+        var title = "The Truman Show" //vulnerable to "hoisting"
+
+        let director = "Peter Weir"
+        const releaseYear = 1998
+
+        //Arrays
+        const characters = [] //not fixed size
+        characters.push("Truman Burbank")
+        console.log(characters[0])
+
+        //Objects
+        const actor = {}
+        actor.FirstName = "Jim"
+        actor.LastName = "Carrey"
+        actor.GetFullName = function () {
+            return this.FirstName + " " + this.LastName //this = this object
+        }
+
+        const actress = {
+            FirstName: "Laura",
+            LastName: "Linney",
+            GetFullName() {
+                return this.FirstName + " " + this.LastName
+            }
+        }
+
+        function Greeting() {
+            window.alert("Good morning!")
+
+            let heading = document.getElementById("title")
+            heading.innerText = "Nice to meet ya"
+        }
+
+        function popUpText() {
+            let popUpElement = document.getElementById("pop-up")
+
+            if (popUpElement) {
+                popUpElement.remove()
+            }
+            else {
+                let pElement = document.createElement("p")
+                let pText = document.createTextNode(actor.GetFullName())
+                pElement.appendChild(pText)
+                pElement.id = "pop-up"
+
+                let titleContainer = document.getElementById("title-container")
+                titleContainer.appendChild(pElement)
+            }
+        }
+
+        function userInputCheck() {
+            var input = document.getElementById("user-text")
+
+            if (input.value.match([/^[A-Za-z]+$/])) {
+                alert("Oh no!")
+            }
+            else {
+            }
+        }
+    </script>
+</head>
+
+
+<body>
+    <div id="title-container">
+        <h1 id="title" onmouseover="popUpText()">Hello There</h1>
+        <!-- Attached Paragraphs Here -->
+    </div>
+
+    <p>How are you</p>
+
+    <form>
+        <input id="user-text" type="text">
+        <input type="submit" value="Submit" onclick="userInputCheck()">
+    </form>
+
+    <button onclick="Greeting()">Click Me</button>
+</body>
+
+</html>
