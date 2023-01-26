@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="lib\driver_config\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Testhost.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

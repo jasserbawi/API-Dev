@@ -36,4 +36,10 @@ public class HomePage
         var userNameElement = _driver.FindElement(By.Id("user-name"));
         userNameElement.SendKeys(userName);
     }
+
+    public string GetErrorMessage()
+    {
+        var errorMessage = _driver.FindElement(By.ClassName("error-message-container")).FindElement(By.TagName("h3"));
+        return errorMessage.Text;
+    }
 }
